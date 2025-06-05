@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.emplyeemanagment.Service.Implemenatation.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -31,7 +32,13 @@ public class AppConfigure {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.anyRequest().permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                    auth.requestMatchers( HttpMethod.POST, "/auth/signup").permitAll();
+                    auth.requestMatchers(HttpMethod.GET , "/Employee/employeeByEmail").hasAnyRole("ADMIN" , "USER");
+                    auth.requestMatchers(HttpMethod.GET , "/Employee/employees").hasAnyRole("ADMIN" , "USER");
+                    auth.requestMatchers(HttpMethod.DELETE, "/Employee/delete/").hasRole("ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/Employee/AddLeave/{id}").hasAnyRole( "USER", "ADMIN");
+                    auth.requestMatchers(HttpMethod.GET, "/Employee/findOne/{id}").hasAnyRole( "USER", "ADMIN");
                 })
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationManager(authenticationManager(http));
@@ -52,6 +59,7 @@ public class AppConfigure {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
 
     @Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {

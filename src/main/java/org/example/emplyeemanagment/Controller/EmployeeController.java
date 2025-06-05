@@ -8,6 +8,7 @@ import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.Responses.EmployeeResponse;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
 import org.example.emplyeemanagment.Responses.LeaveRequestResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountNotFoundException;
@@ -29,19 +30,30 @@ public class EmployeeController {
     public List<EmployeeDto> getAllEmployee() {
         return employeeService.GetAllEmployees();
     }
+    @GetMapping("findOne/{id}")
+    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable Long id) throws AccountNotFoundException {
+        EmployeeResponse response = employeeService.findEmployeeById(id);
+        return ResponseEntity.ok(response);
+
+    }
 
     @GetMapping("employeeByEmail")
     public EmployeeResponse getEmployeeByEmail(@Valid @RequestParam String email) throws AccountNotFoundException {
         return employeeService.findEmployeeByEmail(email);
     }
 
-    @PostMapping("{id}/AddLeave")
-    public LeaveRequestResponse AddLeaveRequest(@Valid @RequestBody LeaveRequestDto leaveRequestDto, @PathVariable Long id) {
+    @PostMapping("AddLeave/{id}")
+    public LeaveRequestResponse AddLeaveRequest(@RequestBody LeaveRequestDto leaveRequestDto, @PathVariable Long id) {
         return leaveRequestService.addLeaveRequest(leaveRequestDto, id);
     }
 
-    @PostMapping("delete/{id}")
-    public EmployeeResponse DeleteEmployee(@PathVariable Long id) throws AccountNotFoundException {
-     return employeeService.DeleteEmployee(id);
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<EmployeeResponse> DeleteEmployee(@PathVariable Long id) throws AccountNotFoundException {
+     EmployeeResponse response = employeeService.DeleteEmployee(id);
+     return ResponseEntity.ok(response);
+    }
+    @PutMapping("update")
+    public EmployeeResponse updateEmployee(@Valid @RequestBody EmployeeDto employee) {
+        return employeeService.updateEmployee(employee);
     }
 }

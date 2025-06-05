@@ -23,11 +23,9 @@ public class LeaveRequestDto {
     @NotNull(message = "La date de début est obligatoire")
     @FutureOrPresent(message = "La date de début doit être aujourd'hui ou dans le futur")
     private LocalDate StartDate;
-
     @NotNull(message = "La date de fin est obligatoire")
     @FutureOrPresent(message = "La date de fin doit être aujourd'hui ou dans le futur")
     private LocalDate EndDate;
-
     @NotBlank(message = "La raison du congé est obligatoire")
     private String reason;
     @NotBlank(message = "Le statut est obligatoire")

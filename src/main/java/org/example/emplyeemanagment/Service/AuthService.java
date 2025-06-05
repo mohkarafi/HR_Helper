@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AuthService {
     AuthResponse signupUser(@Valid SignupRequest signupRequest);
-    AuthResponse login(@Valid LoginRequest loginRequest);
+    AuthResponse loginUser(@Valid LoginRequest loginRequest);
 }

@@ -23,6 +23,6 @@ private AuthService authService;
     }
     @PostMapping("login")
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
-       return authService.login(loginRequest);
+       return authService.loginUser(loginRequest);
     }
 }

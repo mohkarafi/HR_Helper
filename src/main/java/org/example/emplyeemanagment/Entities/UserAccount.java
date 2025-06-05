@@ -28,7 +28,7 @@ public class UserAccount implements UserDetails {
     private String username;
     @Column(nullable = true)
     private String password;
-    private String role = "USER";
+    private String role;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id" , nullable = false , unique = true)
     private Employee employee;

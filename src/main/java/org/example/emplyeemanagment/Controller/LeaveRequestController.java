@@ -18,7 +18,7 @@ public class LeaveRequestController {
     public LeaveRequestDto getLeaveRequestById(@RequestParam Long id) throws ChangeSetPersister.NotFoundException {
         return leaveRequestService.getLeaveRequestById(id);
     }
-   @PostMapping("Add")
+   @PostMapping("Add/{id}")
     public LeaveRequestResponse addLeaveRequest(@RequestBody LeaveRequestDto leaveRequestDto ,@PathVariable Long id) {
         return leaveRequestService.addLeaveRequest(leaveRequestDto , id);
     }

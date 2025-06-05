@@ -11,4 +11,6 @@ public interface EmployeeService {
     EmployeeResponse DeleteEmployee(Long id) throws AccountNotFoundException;
     List<EmployeeDto > GetAllEmployees();
     EmployeeResponse findEmployeeByEmail(String email) throws AccountNotFoundException;
+     EmployeeResponse updateEmployee(EmployeeDto employeeDto);
+     EmployeeResponse findEmployeeById(Long id) throws AccountNotFoundException;
 }

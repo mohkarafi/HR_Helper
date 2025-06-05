@@ -56,7 +56,8 @@ public class JwtHelper {
                 .compact();
     }
 
-    public <T>T extractClaim(String token , Function<Claims , T> claimResolver) {
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         Claims claim1 = extractAllClaims(token);
         return claimResolver.apply(claim1);
     }
@@ -85,7 +86,29 @@ public class JwtHelper {
     }
 
 
+    /*
+    [ Requête Login ]
+       ↓
+    [ UsernamePasswordAuthenticationToken ]
+           ↓
+    [ AuthenticationManager ]
+           ↓
+    → passe à →
+    [ DaoAuthenticationProvider ]
+           ↓
+    → utilise →
+    [ UserDetailsService ]
+           ↓
+    → récupère →
+    [ UserDetails (de la base) ]
+           ↓
+    → compare les mots de passe avec →
+    [ PasswordEncoder ]
+           ↓
+    ✔ Si ok → Authentifié
+    ✖ Sinon → Exception
 
+            */
 
 
 }

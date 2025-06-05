@@ -1,5 +1,6 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import org.example.emplyeemanagment.Configuration.JwtHelper;
 import org.example.emplyeemanagment.Entities.Employee;
@@ -35,7 +36,7 @@ public class AuthServiceImplt implements AuthService {
         UserAccount userAccount = UserAccount.builder()
                 .username(signupRequest.getUsername())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .role("USER")
+                .role(signupRequest.getRole())
                 .employee(employee)
                 .build();
         userAccountRepository.save(userAccount);
@@ -45,18 +46,17 @@ public class AuthServiceImplt implements AuthService {
                 .build();
     }
 
-    @Override
-    public AuthResponse login(LoginRequest loginRequest) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
-                (loginRequest.getUsername(), loginRequest.getPassword()));
-        UserAccount userAccount = userAccountRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
-         Map<String , Object> claims = new HashMap<>();
-         claims.put("userId" , userAccount.getId());
-        String token = jwtHelper.generateToken(claims , userAccount);
+   @Override
+  public AuthResponse loginUser(LoginRequest loginRequest) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        UserAccount userAccount = userAccountRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Map<String , Object> Claims = new HashMap<>();
+        Claims.put("id" , userAccount.getId());
+        String token = jwtHelper.generateToken(Claims ,userAccount);
         return AuthResponse.builder()
                 .responseCode("001")
-                .responseMessage("User successfully logged with the token id => " +token  )
+                .responseMessage(userAccount.getUsername()+ "is successfully logged in with the token " + token)
                 .build();
-    }
+  }
 
 }

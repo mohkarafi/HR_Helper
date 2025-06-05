@@ -10,6 +10,6 @@ import lombok.*;
 public class LoginRequest {
     @NotNull(message = "username is required ")
     private String username;
-    @NotNull(message = "username is required ")
+    @NotNull(message = "password is required ")
     private String password;
 }
