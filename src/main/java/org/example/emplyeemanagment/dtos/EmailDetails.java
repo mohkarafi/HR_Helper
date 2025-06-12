@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class TeamDto {
-    private Long id;
-    private String teamName;
-    private String teamDescription;
+public class EmailDetails {
+    private String ReciverEmail;
+    private String EmailBody;
+    private String EmailSubject;
+    private String attachment;
 }

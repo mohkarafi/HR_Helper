@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
     Optional<UserAccount> findByUsername(String username);
 
-    @Query("Select COUNT(u) > 0 from UserAccount  u WHERE u.username = :username AND u.Id=:employeeID")
-     boolean isOwner(@Param("username")String username, @Param("employeeID")Long employeeID);
+  @Query("Select count(u)>0 from UserAccount u Where u.username = :username AND u.employeeID=:employeeId")
+    public boolean isOwner(@Param("username")String username, @Param("employeeId")Long employeeId);
 
 }

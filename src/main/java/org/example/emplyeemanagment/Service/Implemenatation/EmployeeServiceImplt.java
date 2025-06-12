@@ -8,15 +8,18 @@ import org.example.emplyeemanagment.Mappers.EmployeeMapper;
 import org.example.emplyeemanagment.Repository.DepartmentRepository;
 import org.example.emplyeemanagment.Repository.EmployeeRepository;
 import org.example.emplyeemanagment.Repository.LeaveRequestRepository;
-import org.example.emplyeemanagment.utils.SecurityUtils;
-import org.example.emplyeemanagment.Service.EmployeeService;
-import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.Responses.EmployeeResponse;
+import org.example.emplyeemanagment.Service.EmailService;
+import org.example.emplyeemanagment.Service.EmployeeService;
+import org.example.emplyeemanagment.dtos.EmailDetails;
+import org.example.emplyeemanagment.dtos.EmployeeDto;
+import org.example.emplyeemanagment.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -28,16 +31,28 @@ public class EmployeeServiceImplt implements EmployeeService {
     private LeaveRequestRepository leaveRequestRepository;
     private DepartmentRepository departmentRepository;
     private SecurityUtils securityUtils;
+    private EmailService emailService;
 
     public EmployeeResponse SaveEmployee(EmployeeDto employeeDto) {
         if (employeeRepository.existsByEmail(employeeDto.getEmail())) {
             EmployeeResponse employee = new EmployeeResponse("001", "Account Already Exist", null);
             return employee;
         }
+
         Department department = departmentRepository.findById(employeeDto.getDepartment().getId()).orElseThrow(() -> new RuntimeException("Department not found"));
         Employee employee = EmployeeMapper.toEmployee(employeeDto);
         employee.setDepartment(department);
         employeeRepository.save(employee);
+
+        EmailDetails emailDetails = EmailDetails.builder().ReciverEmail(employeeDto.getEmail())
+                .EmailSubject("Welcome to the Team! " + employeeDto.getFirstName())
+                .EmailBody("Congratulations and welcome to our company!\n" +
+                        "We’re happy to have you with us and excited about what we’ll accomplish together.")
+                .build();
+        String token = UUID.randomUUID().toString();
+        emailService.sendEmail(emailDetails , token);
+
+
         EmployeeResponse employeeResponse = EmployeeResponse.builder()
                 .messageCode("001")
                 .ResponseMessage("Success")
@@ -79,7 +94,8 @@ public class EmployeeServiceImplt implements EmployeeService {
                 .data(EmployeeMapper.toEmployeeDto(employee))
                 .build();
     }
-    @PreAuthorize("@securityUtils.isOwner(#id)")
+
+    @PreAuthorize("$(securityUtils.isOwner(#id))")
     @Override
     public EmployeeResponse updateEmployee(EmployeeDto employeeDto) {
         Employee Findemployee = employeeRepository.findEmployeeByEmail(employeeDto.getEmail());
@@ -90,7 +106,7 @@ public class EmployeeServiceImplt implements EmployeeService {
                     .data(null)
                     .build();
         }
-         Employee employee = EmployeeMapper.toEmployee(employeeDto);
+        Employee employee = EmployeeMapper.toEmployee(employeeDto);
         employeeRepository.save(employee);
 
         return EmployeeResponse.builder()

@@ -9,6 +9,9 @@ import org.example.emplyeemanagment.Repository.EmployeeRepository;
 import org.example.emplyeemanagment.Repository.UserAccountRepository;
 import org.example.emplyeemanagment.Responses.AuthResponse;
 import org.example.emplyeemanagment.Service.AuthService;
+import org.example.emplyeemanagment.Service.EmailService;
+import org.example.emplyeemanagment.Service.EmployeeService;
+import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.LoginRequest;
 import org.example.emplyeemanagment.dtos.SignupRequest;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +31,7 @@ public class AuthServiceImplt implements AuthService {
     private final EmployeeRepository employeeRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtHelper jwtHelper;
+    private final EmailService emailServie;
 
     @Override
     public AuthResponse signupUser(SignupRequest signupRequest) {
@@ -37,8 +41,9 @@ public class AuthServiceImplt implements AuthService {
                 .username(signupRequest.getUsername())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .role(signupRequest.getRole())
-                .employee(employee)
+                .employeeID(employee)
                 .build();
+
         userAccountRepository.save(userAccount);
         return AuthResponse.builder()
                 .responseCode("001")

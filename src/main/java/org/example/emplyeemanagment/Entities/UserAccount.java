@@ -31,5 +31,5 @@ public class UserAccount implements UserDetails {
     private String role;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id" , nullable = false , unique = true)
-    private Employee employee;
+    private Employee employeeID;
 }

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import lombok.*;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.example.emplyeemanagment.Enums.LeaveReason;
+import org.example.emplyeemanagment.Enums.LeaveStatus;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -25,10 +27,11 @@ public class LeaveRequest {
     private LocalDate StartDate ;
     @Column(name ="end_date" )
     private LocalDate EndDate ;
-    @Column(name ="reason" , nullable = false )
-    private String reason;
+    @Enumerated(EnumType.STRING)
+    private LeaveReason reason;
     @Column(name ="status" , nullable = false )
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private LeaveStatus status;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;

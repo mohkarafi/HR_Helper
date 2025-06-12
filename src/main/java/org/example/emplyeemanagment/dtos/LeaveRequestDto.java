@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
+import org.example.emplyeemanagment.Enums.LeaveReason;
+import org.example.emplyeemanagment.Enums.LeaveStatus;
 
 
 import java.time.LocalDate;
@@ -20,16 +22,21 @@ import java.util.Date;
 @JsonPropertyOrder({"reason" , "status" , "startDate" , "endDate" , "employeeId" , "employeeName"})
 public class LeaveRequestDto {
 
-    @NotNull(message = "La date de début est obligatoire")
-    @FutureOrPresent(message = "La date de début doit être aujourd'hui ou dans le futur")
+    @NotNull(message = "Start date is required")
+    @FutureOrPresent(message = "Start date must be today or in the future")
     private LocalDate StartDate;
-    @NotNull(message = "La date de fin est obligatoire")
-    @FutureOrPresent(message = "La date de fin doit être aujourd'hui ou dans le futur")
+
+    @NotNull(message = "End date is required")
+    @FutureOrPresent(message = "End date must be today or in the future")
     private LocalDate EndDate;
-    @NotBlank(message = "La raison du congé est obligatoire")
-    private String reason;
-    @NotBlank(message = "Le statut est obligatoire")
-    private String status;
+
+    @NotBlank(message = "Leave reason is required")
+    private LeaveReason reason;
+
+    @NotBlank(message = "Status is required")
+    private LeaveStatus status;
+
     private Long employeeId;
     private String EmployeeName;
+
 }

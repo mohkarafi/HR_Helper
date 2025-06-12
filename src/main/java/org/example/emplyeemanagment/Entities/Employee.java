@@ -30,9 +30,21 @@ public class Employee {
     private LocalDate hireDate;
     @Column(nullable = false, length = 50)
     private String position;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_ID")
     private Department department;
+
     @OneToMany(mappedBy = "employee")
     private List<LeaveRequest> leaveRequests;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team")
+    private Team team;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "supervisor")
+    private List<Intern> intern;
 }

@@ -32,13 +32,15 @@ public class AppConfigure {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
+                    /*     auth.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
                     auth.requestMatchers( HttpMethod.POST, "/auth/signup").permitAll();
                     auth.requestMatchers(HttpMethod.GET , "/Employee/employeeByEmail").hasAnyRole("ADMIN" , "USER");
                     auth.requestMatchers(HttpMethod.GET , "/Employee/employees").hasAnyRole("ADMIN" , "USER");
                     auth.requestMatchers(HttpMethod.DELETE, "/Employee/delete/").hasRole("ADMIN");
                     auth.requestMatchers(HttpMethod.POST, "/Employee/AddLeave/{id}").hasAnyRole( "USER", "ADMIN");
                     auth.requestMatchers(HttpMethod.GET, "/Employee/findOne/{id}").hasAnyRole( "USER", "ADMIN");
+                })*/
+                    auth.anyRequest().permitAll();
                 })
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationManager(authenticationManager(http));
