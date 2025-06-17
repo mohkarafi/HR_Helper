@@ -25,9 +25,9 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Override
-    public void sendEmail(EmailDetails emailDetails , String token) {
+    public void sendEmail(EmailDetails emailDetails) {
         try {
-            String link = ORIGIN + "auth/signup?token=" + token;
+            String link = ORIGIN + "auth/signup?token=" ;
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(senderEmail);
             message.setTo(emailDetails.getReciverEmail());

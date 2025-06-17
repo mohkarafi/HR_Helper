@@ -16,24 +16,32 @@ import java.util.Date;
 @Data
 @Builder
 public class InternDto {
-    @NotNull(message = "full name is required")
+    @NotNull(message = "Full name is required")
     private String fullName;
-    @NotBlank
+
+    @NotBlank(message = "Email is required")
     private String email;
-    @NotNull(message = "the phone number is required")
+
+    @NotNull(message = "The phone number is required")
     private String phone;
+
     private String school;
-    @JsonFormat(pattern = "dd-mm-yyyy")
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Start date is required")
     @FutureOrPresent(message = "Start date must be today or in the future")
     private Date startDate;
-    @JsonFormat(pattern = "dd-mm-yyyy")
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "End date is required")
     @FutureOrPresent(message = "End date must be today or in the future")
     private Date endDate;
+
     private Long supervisor;
     private String supervisorName;
     private Long task;
     private String taskName;
+
+
 
 }

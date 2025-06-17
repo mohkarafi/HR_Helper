@@ -1,4 +1,5 @@
 package org.example.emplyeemanagment.dtos;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -21,19 +22,21 @@ import java.util.Date;
 @Builder
 @JsonPropertyOrder({"reason" , "status" , "startDate" , "endDate" , "employeeId" , "employeeName"})
 public class LeaveRequestDto {
-
+   private Long id;
     @NotNull(message = "Start date is required")
     @FutureOrPresent(message = "Start date must be today or in the future")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate StartDate;
 
     @NotNull(message = "End date is required")
     @FutureOrPresent(message = "End date must be today or in the future")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate EndDate;
 
-    @NotBlank(message = "Leave reason is required")
+    @NotNull(message = "Leave reason is required")
     private LeaveReason reason;
 
-    @NotBlank(message = "Status is required")
+    @NotNull(message = "Status is required")
     private LeaveStatus status;
 
     private Long employeeId;

@@ -8,7 +8,7 @@ public class ReportMapper {
         Report report = Report.builder()
                 .title(reportDto.getTitle())
                 .content(reportDto.getDescription())
-                .createdAt(reportDto.getCreatedAT())
+                .createdAt(reportDto.getCreatedAt())
                 .status(reportDto.getStatus())
                 .build();
         return report;
@@ -18,7 +18,7 @@ public class ReportMapper {
         ReportDto reportDto = ReportDto.builder()
                 .title(report.getTitle())
                 .description(report.getContent())
-                .createdAT(report.getCreatedAt())
+                .createdAt(report.getCreatedAt())
                 .status(report.getStatus())
                 .internId(report.getIntern() != null ? report.getIntern().getId(): null)
                 .internName(report.getIntern() != null ? report.getIntern().getFullName() : null)

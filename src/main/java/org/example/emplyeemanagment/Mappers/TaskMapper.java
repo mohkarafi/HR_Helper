@@ -23,9 +23,9 @@ public class TaskMapper {
                 .assignedDate(task.getAssignedDate())
                 .description(task.getDescription())
                 .employeeId(task.getEmployee().getId() != null ? task.getEmployee().getId() : null)
-                .AssignedTo(task.getEmployee() != null ? task.getEmployee().getFirstName() + " "+ task.getEmployee().getLastName() : null)
-                .TeamId(task.getTeam() != null ? task.getTeam().getId() : null)
-                .TeamName(task.getTeam() != null ? task.getTeam().getName() : null)
+                .assignedTo(task.getEmployee() != null ? task.getEmployee().getFirstName() + " "+ task.getEmployee().getLastName() : null)
+                .teamId(task.getTeam() != null ? task.getTeam().getId() : null)
+                .teamName(task.getTeam() != null ? task.getTeam().getName() : null)
                 .build();
 
         return taskDto;

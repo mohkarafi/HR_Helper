@@ -1,7 +1,8 @@
 package org.example.emplyeemanagment.Controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.emplyeemanagment.Responses.GenericResponse;
+import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.ReportService;
 import org.example.emplyeemanagment.dtos.ReportDto;
 import org.springframework.web.bind.annotation.*;
@@ -14,26 +15,29 @@ public class ReportController {
 
 
     @PostMapping("Add")
-    public GenericResponse addReport( @RequestBody ReportDto reportDto) throws Exception {
+    public StandardResponse addReport(@Valid  @RequestBody ReportDto reportDto) throws Exception {
         return reportService.addReport(reportDto);
     }
 
     @PutMapping("update/{id}")
-    public GenericResponse updateReport(@PathVariable Long id , @RequestBody ReportDto reportDto) throws Exception {
+    public StandardResponse updateReport(@PathVariable Long id , @Valid @RequestBody ReportDto reportDto) throws Exception {
         return reportService.updateReport(id, reportDto);
     }
-
+    @GetMapping("findByInternId/{id}")
+    public StandardResponse findByInternId(@PathVariable Long id){
+        return reportService.getReportByInternId(id);
+    }
     @DeleteMapping("delete/{id}")
-    public GenericResponse deleteReport(@PathVariable Long id) throws Exception {
+    public StandardResponse deleteReport(@PathVariable Long id) throws Exception {
         return reportService.deleteReport(id);
     }
     @GetMapping("All")
-    public GenericResponse getAllReports() throws Exception {
+    public StandardResponse getAllReports() throws Exception {
         return reportService.getAllReports();
     }
 
     @GetMapping("findOne/{id}")
-    public GenericResponse getReportById(@PathVariable Long id) throws Exception {
+    public StandardResponse getReportById(@PathVariable Long id) throws Exception {
         return reportService.getReportById(id);
     }
 

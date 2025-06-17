@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @JsonPropertyOrder({"messageCode", "ResponseMessage", "data"})
-public class GenericResponse {
+public class StandardResponse {
     @JsonProperty("messageCode")
-    private String messageCode;
+    private String code;
     @JsonProperty("ResponseMessage")
-    private String ResponseMessage;
+    private String status;
     @JsonProperty("data")
     private Object data ;
 }

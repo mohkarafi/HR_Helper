@@ -3,17 +3,10 @@ package org.example.emplyeemanagment;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
-import org.example.emplyeemanagment.Entities.Department;
-import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Repository.EmployeeRepository;
-import org.example.emplyeemanagment.Service.EmployeeService;
-import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Date;
 
 @SpringBootApplication
 public class EmplyeeManagmentApplication {

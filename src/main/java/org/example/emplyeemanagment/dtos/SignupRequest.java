@@ -1,5 +1,6 @@
 package org.example.emplyeemanagment.dtos;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,11 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class SignupRequest {
-    @NotNull(message = "username is required ")
+    @NotBlank(message = "Username is required")
     private String username;
-    @NotNull(message = "password is required ")
+
+    @NotBlank(message = "Password is required")
     private String password;
-    @NotNull(message = "employee id cannot be null")
+
+    @NotNull(message = "Employee ID cannot be null")
     private Long employeeId;
     private String role ;
 }

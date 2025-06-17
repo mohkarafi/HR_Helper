@@ -1,12 +1,13 @@
 package org.example.emplyeemanagment.Service;
 
-import org.example.emplyeemanagment.Responses.GenericResponse;
+import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.dtos.ReportDto;
 
 public interface ReportService {
-    GenericResponse addReport(ReportDto reportDto) throws Exception;
-    GenericResponse updateReport( Long id , ReportDto reportDto);
-    GenericResponse deleteReport(Long id);
-    GenericResponse getAllReports();
-    GenericResponse getReportById(Long id);
+    StandardResponse addReport(ReportDto reportDto) throws Exception;
+    StandardResponse updateReport(Long id , ReportDto reportDto);
+    StandardResponse deleteReport(Long id);
+    StandardResponse getAllReports();
+    StandardResponse getReportById(Long id);
+    StandardResponse getReportByInternId(Long id);
 }

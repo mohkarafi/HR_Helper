@@ -30,6 +30,10 @@ public class Employee {
     private LocalDate hireDate;
     @Column(nullable = false, length = 50)
     private String position;
+    @Column(name = "is_verified", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private Boolean isVerified;
+    @Column(name = "account_creation_token")
+    private String accountCreationToken;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_ID")

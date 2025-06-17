@@ -15,6 +15,8 @@ public class EmployeeMapper {
                 .hireDate(employee.getHireDate())
                 .position(employee.getPosition())
                 .department(employee.getDepartment())
+                .isValid(employee.getIsVerified())
+                .accountCreationToken(employee.getAccountCreationToken())
                 .build();
     }
 

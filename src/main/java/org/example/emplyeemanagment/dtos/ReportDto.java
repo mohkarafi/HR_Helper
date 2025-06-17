@@ -1,6 +1,9 @@
 package org.example.emplyeemanagment.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +17,22 @@ import java.util.Date;
 @Builder
 
 public class ReportDto {
-    private  String title ;
-    private String description ;
-    @JsonFormat(pattern = "dd/mm/yyyy")
-    private Date createdAT;
+    @NotBlank(message = "Title must not be blank")
+    private String title;
+
+    @NotBlank(message = "Description must not be blank")
+    private String description;
+
+    @NotNull(message = "Created date is required")
+    @FutureOrPresent(message = "Created date must be today or in the future")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private Date createdAt;
+
+    @NotNull(message = "Status is required")
     private ReportStatus status;
+
+    @NotNull(message = "Intern ID is required")
     private Long internId;
+
     private String internName;
 }

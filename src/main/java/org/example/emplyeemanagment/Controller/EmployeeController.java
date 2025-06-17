@@ -2,58 +2,55 @@ package org.example.emplyeemanagment.Controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.emplyeemanagment.Service.EmployeeService;
+import org.example.emplyeemanagment.Responses.StandardResponse;
+import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.Service.LeaveRequestService;
 import org.example.emplyeemanagment.dtos.EmployeeDto;
-import org.example.emplyeemanagment.Responses.EmployeeResponse;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
-import org.example.emplyeemanagment.Responses.LeaveRequestResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.AccountNotFoundException;
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("Employee")
 public class EmployeeController {
-    private EmployeeService employeeService;
+    private NotificationService employeeService;
     private LeaveRequestService leaveRequestService;
 
     @PostMapping(path = "save")
-    public EmployeeResponse saveEmployee(@Valid @RequestBody EmployeeDto employee) {
+    public StandardResponse saveEmployee(@Valid @RequestBody EmployeeDto employee) {
         return employeeService.SaveEmployee(employee);
     }
 
     @GetMapping("employees")
-    public List<EmployeeDto> getAllEmployee() {
+    public StandardResponse getAllEmployee() {
         return employeeService.GetAllEmployees();
     }
+
     @GetMapping("findOne/{id}")
-    public ResponseEntity<EmployeeResponse> getEmployeeById(@PathVariable Long id) throws AccountNotFoundException {
-        EmployeeResponse response = employeeService.findEmployeeById(id);
-        return ResponseEntity.ok(response);
+    public StandardResponse getEmployeeById(@PathVariable Long id) throws AccountNotFoundException {
+        return employeeService.findEmployeeById(id);
 
     }
 
     @GetMapping("employeeByEmail")
-    public EmployeeResponse getEmployeeByEmail(@Valid @RequestParam String email) throws AccountNotFoundException {
+    public StandardResponse getEmployeeByEmail(@Valid @RequestParam String email) throws AccountNotFoundException {
         return employeeService.findEmployeeByEmail(email);
     }
 
     @PostMapping("AddLeave/{id}")
-    public LeaveRequestResponse AddLeaveRequest(@RequestBody LeaveRequestDto leaveRequestDto, @PathVariable Long id) {
-        return leaveRequestService.addLeaveRequest(leaveRequestDto, id);
+    public StandardResponse AddLeaveRequest(@Valid @RequestBody LeaveRequestDto leaveRequestDto  ,@PathVariable Long id) {
+        return employeeService.addLeaveRequest(leaveRequestDto , id);
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<EmployeeResponse> DeleteEmployee(@PathVariable Long id) throws AccountNotFoundException {
-     EmployeeResponse response = employeeService.DeleteEmployee(id);
-     return ResponseEntity.ok(response);
+    public StandardResponse DeleteEmployee(@PathVariable Long id) throws AccountNotFoundException {
+        return employeeService.DeleteEmployee(id);
     }
+
     @PutMapping("update")
-    public EmployeeResponse updateEmployee(@Valid @RequestBody EmployeeDto employee) {
+    public StandardResponse updateEmployee(@Valid @RequestBody EmployeeDto employee) {
         return employeeService.updateEmployee(employee);
     }
 }
