@@ -2,6 +2,7 @@ package org.example.emplyeemanagment.Controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.emplyeemanagment.Enums.LeaveStatus;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.LeaveRequestService;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
@@ -17,6 +18,10 @@ public class LeaveRequestController {
     @GetMapping("GetbyId")
     public StandardResponse getLeaveRequestById(@Valid @RequestParam Long id) throws ChangeSetPersister.NotFoundException {
         return leaveRequestService.getLeaveRequestById(id);
+    }
+    @PutMapping("update/{id}")
+    public StandardResponse updateLeaveRequest(@RequestBody LeaveRequestDto leaveRequestDto, @PathVariable Long id)  {
+        return leaveRequestService.updateLeaveRequest(id,leaveRequestDto);
     }
 
     @PostMapping("Add/{id}")

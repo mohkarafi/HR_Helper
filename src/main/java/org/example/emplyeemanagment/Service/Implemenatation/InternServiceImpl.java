@@ -10,7 +10,7 @@ import org.example.emplyeemanagment.Repository.EmployeeRepository;
 import org.example.emplyeemanagment.Repository.InternRepository;
 import org.example.emplyeemanagment.Repository.TaskRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
-import org.example.emplyeemanagment.Service.EmailService;
+import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.Service.InternService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.InternDto;
@@ -27,7 +27,7 @@ public class InternServiceImpl implements InternService {
     private final InternRepository internRepository;
     private final EmployeeRepository employeeRepository;
     private final TaskRepository taskRepository;
-    private final EmailService emailService;
+    private final NotificationService emailService;
 
     @Override
     public StandardResponse AddIntern(InternDto internDto) throws Exception {

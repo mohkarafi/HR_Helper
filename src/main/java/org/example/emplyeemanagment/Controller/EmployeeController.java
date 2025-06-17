@@ -3,7 +3,7 @@ package org.example.emplyeemanagment.Controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.emplyeemanagment.Responses.StandardResponse;
-import org.example.emplyeemanagment.Service.NotificationService;
+import org.example.emplyeemanagment.Service.EmployeeService;
 import org.example.emplyeemanagment.Service.LeaveRequestService;
 import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
@@ -15,7 +15,7 @@ import javax.security.auth.login.AccountNotFoundException;
 @AllArgsConstructor
 @RequestMapping("Employee")
 public class EmployeeController {
-    private NotificationService employeeService;
+    private EmployeeService employeeService;
     private LeaveRequestService leaveRequestService;
 
     @PostMapping(path = "save")

@@ -8,8 +8,8 @@ import org.example.emplyeemanagment.Repository.EmployeeRepository;
 import org.example.emplyeemanagment.Repository.UserAccountRepository;
 import org.example.emplyeemanagment.Responses.AuthResponse;
 import org.example.emplyeemanagment.Service.AuthService;
-import org.example.emplyeemanagment.Service.EmailService;
 import org.example.emplyeemanagment.Service.NotificationService;
+import org.example.emplyeemanagment.Service.EmployeeService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.LoginRequest;
 import org.example.emplyeemanagment.dtos.SignupRequest;
@@ -30,8 +30,8 @@ public class AuthServiceImpl implements AuthService {
     private final EmployeeRepository employeeRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtHelper jwtHelper;
-    private final EmailService emailServie;
-    private final NotificationService employeeService;
+    private final NotificationService emailServie;
+    private final EmployeeService employeeService;
 
     @Override
     public AuthResponse signupUser(SignupRequest signupRequest) {
