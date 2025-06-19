@@ -1,6 +1,6 @@
 package org.example.emplyeemanagment.Repository;
 
-import org.example.emplyeemanagment.Entities.Task;
+import org.example.emplyeemanagment.Entities.PaySlip;
 import org.example.emplyeemanagment.Entities.Team;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +12,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TaskRepository extends JpaRepository<Task, Long> {
-    Page<Task> findAll(Pageable pageable);
-    Task findTaskByStatus(String status);
-    @Query("select t From Task t where t.employee.id=:employeeId")
-    List<Task> findTasksByEmployeeId(@Param("employeeId") Long employeeId);
+public interface PaySlipRepository extends JpaRepository<PaySlip, Long> {
+    Page<PaySlip> findAll(Pageable pageable);
+    @Query("Select p From PaySlip p where p.employee.id=:employeeId")
+    List<PaySlip> findByEmployeeId(@Param("employeeId") Long employeeId);
 }

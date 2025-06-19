@@ -10,6 +10,8 @@ import org.example.emplyeemanagment.Repository.ReportRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.ReportService;
 import org.example.emplyeemanagment.dtos.ReportDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -104,9 +106,9 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public StandardResponse getAllReports() {
-        List<Report> reports = reportRepository.findAll();
-        List<ReportDto> reportDtos = reports.stream()
+    public StandardResponse getAllReports(int page , int size) {
+        Page<Report> reportPages = reportRepository.findAll(PageRequest.of(page,size));
+        List<ReportDto> reportDtos = reportPages.getContent().stream()
                 .map(ReportMapper::mapToReportDto)
                 .collect(Collectors.toList());
 

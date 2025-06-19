@@ -53,5 +53,5 @@ public class Employee {
     private List<Intern> intern;
 
     @OneToMany(mappedBy = "employee")
-    public List<Payroll>  payroll;
+    public List<PaySlip> paySlip;
 }

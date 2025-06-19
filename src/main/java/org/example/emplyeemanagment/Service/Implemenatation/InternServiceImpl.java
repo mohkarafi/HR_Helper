@@ -14,6 +14,8 @@ import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.Service.InternService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.InternDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -95,9 +97,9 @@ public class InternServiceImpl implements InternService {
 
 
     @Override
-    public StandardResponse getAllInterns() {
-        List<Intern> interns = internRepository.findAll();
-        List<InternDto> internDtos = interns.stream().map(intern -> InternMapper.mapToInternDto(intern)).collect(Collectors.toList());
+    public StandardResponse getAllInterns(int page , int size) {
+        Page<Intern> internPages = internRepository.findAll(PageRequest.of(page, size));
+        List<InternDto> internDtos = internPages.getContent().stream().map(intern -> InternMapper.mapToInternDto(intern)).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("Interns Found")

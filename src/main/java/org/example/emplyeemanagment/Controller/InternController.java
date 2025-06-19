@@ -41,7 +41,8 @@ public class InternController {
     }
 
     @GetMapping("All")
-    public StandardResponse GetAllInterns() throws Exception {
-        return internService.getAllInterns();
+    public StandardResponse GetAllInterns(@RequestParam(name = "page", defaultValue = "0")int page ,
+                                          @RequestParam(name = "size", defaultValue = "5")int size  ) throws Exception {
+        return internService.getAllInterns(page,size);
     }
 }

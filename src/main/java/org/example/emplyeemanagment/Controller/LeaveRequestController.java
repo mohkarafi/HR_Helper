@@ -30,8 +30,9 @@ public class LeaveRequestController {
     }
 
     @GetMapping("getAll")
-    public StandardResponse getAllLeaveRequests() {
-        return leaveRequestService.getAllLeaveRequests();
+    public StandardResponse getAllLeaveRequests(@RequestParam(name = "page", defaultValue = "0")int page ,
+                                                @RequestParam(name = "size", defaultValue = "5")int size  ) {
+        return leaveRequestService.getAllLeaveRequests(page,size);
     }
 
     @PostMapping("delete")

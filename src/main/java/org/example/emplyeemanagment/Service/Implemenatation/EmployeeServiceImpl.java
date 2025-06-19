@@ -12,12 +12,14 @@ import org.example.emplyeemanagment.Repository.DepartmentRepository;
 import org.example.emplyeemanagment.Repository.EmployeeRepository;
 import org.example.emplyeemanagment.Repository.LeaveRequestRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
-import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.Service.EmployeeService;
+import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
 import org.example.emplyeemanagment.utils.SecurityUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -91,9 +93,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public StandardResponse GetAllEmployees() {
-        List<Employee> employees = employeeRepository.findAll();
-        List<EmployeeDto> employeesDtos = employees.stream().map(EmployeeMapper::toEmployeeDto).collect(Collectors.toList());
+    public StandardResponse GetAllEmployees(int page, int size) {
+        var pageableRequest = PageRequest.of(page, size);
+        Page<Employee> employeePage = employeeRepository.findAll(pageableRequest);
+        List<EmployeeDto> employeesDtos = employeePage.getContent().stream().map(EmployeeMapper::toEmployeeDto).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("Employee Listed Successfully")

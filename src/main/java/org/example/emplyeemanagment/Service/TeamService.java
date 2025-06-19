@@ -7,6 +7,6 @@ public interface TeamService {
     StandardResponse addTeam(TeamDto teamDto);
     StandardResponse updateTeam(Long id , TeamDto teamDto) throws Exception;
     StandardResponse deleteTeam(Long id);
-    StandardResponse getAllTeams();
+    StandardResponse getAllTeams(int page , int size);
     StandardResponse getTeamById(Long id) throws Exception;
 }

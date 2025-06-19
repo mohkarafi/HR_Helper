@@ -4,16 +4,16 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
-import org.example.emplyeemanagment.Entities.Payroll;
-import org.example.emplyeemanagment.Enums.payrollStatus;
-import org.example.emplyeemanagment.Mappers.PayrollMapper;
+import org.example.emplyeemanagment.Entities.PaySlip;
+import org.example.emplyeemanagment.Enums.paySlipStatus;
+import org.example.emplyeemanagment.Mappers.PaySlipMapper;
 import org.example.emplyeemanagment.Repository.EmployeeRepository;
-import org.example.emplyeemanagment.Repository.PayrollRepository;
+import org.example.emplyeemanagment.Repository.PaySlipRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.NotificationService;
-import org.example.emplyeemanagment.Service.PayrollService;
+import org.example.emplyeemanagment.Service.PaySlipService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
-import org.example.emplyeemanagment.dtos.PayrollDto;
+import org.example.emplyeemanagment.dtos.PaySlipDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,22 +23,22 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
-public class PayrollServiceImpl implements PayrollService {
-    private final PayrollRepository payrollRepository;
+public class PaySlipServiceImpl implements PaySlipService {
+    private final PaySlipRepository paySlipRepository;
     private final EmployeeRepository employeeRepository;
     private final NotificationService notificationService;
 
     @Override
-    public StandardResponse AddPayroll(PayrollDto payrollDto) {
+    public StandardResponse AddPayroll(PaySlipDto paySlipDto) {
         try {
-            Payroll payroll = PayrollMapper.mapToPayroll(payrollDto);
-            Employee employee = employeeRepository.findById(payrollDto.getEmployeeId()).orElseThrow(() -> new Exception("Employee not found"));
-            payroll.setEmployee(employee);
-            Payroll SavePayroll = payrollRepository.save(payroll);
+            PaySlip paySlip = PaySlipMapper.mapToPayroll(paySlipDto);
+            Employee employee = employeeRepository.findById(paySlipDto.getEmployeeId()).orElseThrow(() -> new Exception("Employee not found"));
+            paySlip.setEmployee(employee);
+            PaySlip savePaySlip = paySlipRepository.save(paySlip);
             return StandardResponse.builder()
                     .code("200")
                     .status("success")
-                    .data(PayrollMapper.mapToPayrollDto(SavePayroll))
+                    .data(PaySlipMapper.mapToPayrollDto(savePaySlip))
                     .build();
         } catch (Exception e) {
             return StandardResponse.builder()
@@ -49,24 +49,24 @@ public class PayrollServiceImpl implements PayrollService {
     }
 
     @Override
-    public StandardResponse UpdatePayroll(Long id, PayrollDto payrollDto) {
+    public StandardResponse UpdatePayroll(Long id, PaySlipDto paySlipDto) {
         try {
-            Payroll payroll = payrollRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payroll not found"));
-            Employee employee = employeeRepository.findById(payroll.getEmployee().getId()).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-            payroll.setId(payrollDto.getId());
-            payroll.setPayrollDate(payrollDto.getPayrollDate());
-            payroll.setBaseSalary(payrollDto.getBaseSalary());
-            payroll.setBonus(payrollDto.getBonus());
-            payroll.setDeductions(payrollDto.getDeductions());
-            payroll.setTotalPaid(payroll.getTotalPaid());
-            payroll.setStatus(payrollDto.getStatus());
-            payroll.setEmployee(employee);
-            Payroll SavePayroll = payrollRepository.save(payroll);
-            if(SavePayroll.getStatus()== payrollStatus.Validated || SavePayroll.getStatus()== payrollStatus.Paid){
+            PaySlip paySlip = paySlipRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Payroll not found"));
+            Employee employee = employeeRepository.findById(paySlip.getEmployee().getId()).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+            paySlip.setId(paySlipDto.getId());
+            paySlip.setPayrollDate(paySlipDto.getPayrollDate());
+            paySlip.setBaseSalary(paySlipDto.getBaseSalary());
+            paySlip.setBonus(paySlipDto.getBonus());
+            paySlip.setDeductions(paySlipDto.getDeductions());
+            paySlip.setTotalPaid(paySlip.getTotalPaid());
+            paySlip.setStatus(paySlipDto.getStatus());
+            paySlip.setEmployee(employee);
+            PaySlip savePaySlip = paySlipRepository.save(paySlip);
+            if(savePaySlip.getStatus()== paySlipStatus.Validated || savePaySlip.getStatus()== paySlipStatus.Paid){
                 EmailDetails emailDetails = EmailDetails.builder()
-                        .ReciverEmail(payroll.getEmployee().getEmail())
-                        .EmailSubject("Payroll Bulletin  " + SavePayroll.getStatus()+"\n")
-                        .EmailBody("Your payroll bulletin for the period" +SavePayroll.getPayrollDate()+ " %s has been processed successfully.  \n" +
+                        .ReciverEmail(paySlip.getEmployee().getEmail())
+                        .EmailSubject("Payroll Bulletin  " + savePaySlip.getStatus()+"\n")
+                        .EmailBody("Your payroll bulletin for the period" + savePaySlip.getPayrollDate()+ " %s has been processed successfully.  \n" +
                                 "You can view and download it from your personal portal.")
                         .build();
                 notificationService.sendEmail(emailDetails);
@@ -74,7 +74,7 @@ public class PayrollServiceImpl implements PayrollService {
             return StandardResponse.builder()
                     .code("200")
                     .status("success")
-                    .data(PayrollMapper.mapToPayrollDto(SavePayroll))
+                    .data(PaySlipMapper.mapToPayrollDto(savePaySlip))
                     .build();
         } catch (Exception e) {
             return StandardResponse.builder()
@@ -86,15 +86,15 @@ public class PayrollServiceImpl implements PayrollService {
 
     @Override
     public StandardResponse DeletePayroll(Long id) {
-        Optional<Payroll> payroll = payrollRepository.findById(id);
+        Optional<PaySlip> payroll = paySlipRepository.findById(id);
         if (payroll.isEmpty()) {
             return StandardResponse.builder()
                     .code("403")
                     .status("Payroll Not Found ")
                     .build();
         }
-        Payroll getPayroll = payroll.get();
-        payrollRepository.delete(getPayroll);
+        PaySlip getPaySlip = payroll.get();
+        paySlipRepository.delete(getPaySlip);
         return StandardResponse.builder()
                 .code("200")
                 .status("Payroll Deleted Successfully")
@@ -112,8 +112,8 @@ public class PayrollServiceImpl implements PayrollService {
                     .build();
         }
         Employee getEmployee = employee.get();
-        List<Payroll> payrolls = payrollRepository.findByEmployeeId(getEmployee.getId());
-        List<PayrollDto> payrollsDto = payrolls.stream().map(payroll -> PayrollMapper.mapToPayrollDto(payroll)).collect(Collectors.toList());
+        List<PaySlip> paySlips = paySlipRepository.findByEmployeeId(getEmployee.getId());
+        List<PaySlipDto> payrollsDto = paySlips.stream().map(paySlip -> PaySlipMapper.mapToPayrollDto(paySlip)).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("success")

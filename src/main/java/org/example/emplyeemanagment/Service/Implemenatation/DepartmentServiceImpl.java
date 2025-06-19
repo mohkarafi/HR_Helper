@@ -8,6 +8,8 @@ import org.example.emplyeemanagment.Repository.DepartmentRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.DepartmentService;
 import org.example.emplyeemanagment.dtos.DapartmentDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -68,9 +70,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public StandardResponse findAllDepartments() {
-        List<Department> departments = departmentRepository.findAll();
-        List<DapartmentDto> departmentsDto = departments.stream().map(DepartmentMapper::toDepartmentDto).collect(Collectors.toList());
+    public StandardResponse findAllDepartments(int page , int size) {
+        Page<Department> internPages = departmentRepository.findAll(PageRequest.of(page, size));
+        List<DapartmentDto> departmentsDto = internPages.getContent().stream().map(DepartmentMapper::toDepartmentDto).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("Departments Found")

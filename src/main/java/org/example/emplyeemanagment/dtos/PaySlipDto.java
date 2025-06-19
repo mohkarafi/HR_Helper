@@ -6,14 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.emplyeemanagment.Enums.payrollStatus;
+import org.example.emplyeemanagment.Enums.paySlipStatus;
 
 import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class PayrollDto {
+public class PaySlipDto {
     private Long id;
     @NotNull(message = "payroll date is required")
     @JsonFormat(pattern = "dd-MM-yyyy")
@@ -24,6 +24,6 @@ public class PayrollDto {
     private Double bonus;
     @NotNull(message = "deductions Salary is required")
     private Double deductions;
-    private payrollStatus status;
+    private paySlipStatus status;
     private Long employeeId;
 }

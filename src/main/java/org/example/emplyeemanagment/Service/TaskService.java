@@ -10,6 +10,6 @@ public interface TaskService {
     StandardResponse findTaskByStatus(String status);
     StandardResponse updateTask(Long id , TaskDto taskDto);
     StandardResponse deleteTask(Long id);
-    StandardResponse findAllTasks();
+    StandardResponse findAllTasks(int page , int size);
     StandardResponse findTasksByEmployeeId(Long employeeId);
 }

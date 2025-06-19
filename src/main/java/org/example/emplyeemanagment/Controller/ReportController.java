@@ -32,8 +32,9 @@ public class ReportController {
         return reportService.deleteReport(id);
     }
     @GetMapping("All")
-    public StandardResponse getAllReports() throws Exception {
-        return reportService.getAllReports();
+    public StandardResponse getAllReports(@RequestParam(name = "page", defaultValue = "0")int page ,
+                                          @RequestParam(name = "size", defaultValue = "5")int size  ) throws Exception {
+        return reportService.getAllReports(page , size);
     }
 
     @GetMapping("findOne/{id}")

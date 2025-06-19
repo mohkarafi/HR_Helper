@@ -35,8 +35,9 @@ public class DepartmentController {
     }
 
     @GetMapping("All")
-    public StandardResponse getAllDepartments() {
-        return departmentService.findAllDepartments();
+    public StandardResponse getAllDepartments(@RequestParam(name = "page", defaultValue = "0")int page ,
+                                              @RequestParam(name = "size", defaultValue = "5")int size  ) {
+        return departmentService.findAllDepartments(page,size);
     }
 
 }

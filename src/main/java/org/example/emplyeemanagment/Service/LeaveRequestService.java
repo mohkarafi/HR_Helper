@@ -7,7 +7,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 
 public interface LeaveRequestService {
     StandardResponse addLeaveRequest(LeaveRequestDto leaveRequestDto , Long employeeId);
-    StandardResponse getAllLeaveRequests();
+    StandardResponse getAllLeaveRequests(int page , int size);
     StandardResponse getLeaveRequestById(Long id) throws ChangeSetPersister.NotFoundException;
     StandardResponse updateLeaveRequest(Long id, LeaveRequestDto leaveRequestDto);
     StandardResponse deleteLeaveRequest(Long id);

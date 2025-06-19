@@ -12,6 +12,8 @@ import org.example.emplyeemanagment.Repository.TeamRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.TaskService;
 import org.example.emplyeemanagment.dtos.TaskDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -108,9 +110,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public StandardResponse findAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
-        List<TaskDto> TasksDtos = tasks.stream().map(task -> TaskMapper.mapTotaskDto(task)).collect(Collectors.toList());
+    public StandardResponse findAllTasks(int page , int size) {
+        Page<Task> taskPages = taskRepository.findAll(PageRequest.of(page,size));
+        List<TaskDto> TasksDtos = taskPages.getContent().stream().map(task -> TaskMapper.mapTotaskDto(task)).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("Successfully found all tasks")

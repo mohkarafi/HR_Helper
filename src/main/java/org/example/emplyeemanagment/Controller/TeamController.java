@@ -18,8 +18,9 @@ public class TeamController {
     }
 
     @GetMapping("findAll")
-    public StandardResponse getAllTeams() {
-        return teamService.getAllTeams();
+    public StandardResponse getAllTeams(@RequestParam(name = "page", defaultValue = "0")int page ,
+                                        @RequestParam(name = "size", defaultValue = "2")int size  ) {
+        return teamService.getAllTeams(page , size);
     }
 
     @GetMapping("findById/{id}")

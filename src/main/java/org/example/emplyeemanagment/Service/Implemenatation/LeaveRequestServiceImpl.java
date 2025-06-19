@@ -18,6 +18,8 @@ import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
 import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,9 +47,9 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     }
 
     @Override
-    public StandardResponse getAllLeaveRequests() {
-        List<LeaveRequest> requests = leaveRequestRepository.findAll();
-        List<LeaveRequestDto> requestDtos = requests.stream().map(LeaveRequestMapper::mapToLeaveRequestDto).collect(Collectors.toList());
+    public StandardResponse getAllLeaveRequests(int page , int size) {
+        Page<LeaveRequest> requestPages = leaveRequestRepository.findAll(PageRequest.of(page, size));
+        List<LeaveRequestDto> requestDtos = requestPages.getContent().stream().map(LeaveRequestMapper::mapToLeaveRequestDto).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("success")

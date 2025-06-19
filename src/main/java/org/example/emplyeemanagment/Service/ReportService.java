@@ -7,7 +7,7 @@ public interface ReportService {
     StandardResponse addReport(ReportDto reportDto) throws Exception;
     StandardResponse updateReport(Long id , ReportDto reportDto);
     StandardResponse deleteReport(Long id);
-    StandardResponse getAllReports();
+    StandardResponse getAllReports(int page , int size);
     StandardResponse getReportById(Long id);
     StandardResponse getReportByInternId(Long id);
 }

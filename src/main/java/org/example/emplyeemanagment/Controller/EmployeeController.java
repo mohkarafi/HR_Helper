@@ -24,8 +24,9 @@ public class EmployeeController {
     }
 
     @GetMapping("employees")
-    public StandardResponse getAllEmployee() {
-        return employeeService.GetAllEmployees();
+    public StandardResponse getAllEmployee( @RequestParam(name = "page", defaultValue = "0")int page ,
+                                            @RequestParam(name = "size", defaultValue = "5")int size  ) {
+        return employeeService.GetAllEmployees(page,size);
     }
 
     @GetMapping("findOne/{id}")

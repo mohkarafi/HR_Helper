@@ -5,11 +5,12 @@ import org.example.emplyeemanagment.dtos.EmployeeDto;
 import org.example.emplyeemanagment.dtos.LeaveRequestDto;
 
 import javax.security.auth.login.AccountNotFoundException;
+import java.awt.print.Pageable;
 
 public interface EmployeeService {
     StandardResponse SaveEmployee(EmployeeDto employee);
     StandardResponse DeleteEmployee(Long id) throws AccountNotFoundException;
-    StandardResponse GetAllEmployees();
+    StandardResponse GetAllEmployees(int page , int size );
     StandardResponse findEmployeeByEmail(String email) throws AccountNotFoundException;
     StandardResponse updateEmployee(EmployeeDto employeeDto);
     StandardResponse findEmployeeById(Long id) throws AccountNotFoundException;

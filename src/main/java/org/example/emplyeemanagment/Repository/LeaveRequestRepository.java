@@ -2,7 +2,10 @@ package org.example.emplyeemanagment.Repository;
 
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.LeaveRequest;
+import org.example.emplyeemanagment.Entities.Team;
 import org.example.emplyeemanagment.Enums.LeaveStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +15,8 @@ import java.util.List;
 
 @Repository
 public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long> {
+    Page<LeaveRequest> findAll(Pageable pageable);
+
     @Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM LeaveRequest l WHERE l.employee.id = :employeeId AND l.status IN :statuses")
     boolean existsByEmployeeIdAndStatusIn(@Param("employeeId") Long employeeId, @Param("statuses") List<LeaveStatus> statuses);
 

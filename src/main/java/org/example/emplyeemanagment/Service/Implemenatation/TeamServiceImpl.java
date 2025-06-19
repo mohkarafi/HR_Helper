@@ -8,6 +8,8 @@ import org.example.emplyeemanagment.Repository.TeamRepository;
 import org.example.emplyeemanagment.Responses.StandardResponse;
 import org.example.emplyeemanagment.Service.TeamService;
 import org.example.emplyeemanagment.dtos.TeamDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -80,13 +82,13 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public StandardResponse getAllTeams() {
-        List<Team> teams = teamRepository.findAll();
-        List<TeamDto> teamDtos = teams.stream().map(team -> TeamMapper.mapToTeamDto(team)).collect(Collectors.toList());
+    public StandardResponse getAllTeams(int page , int size) {
+        Page<Team> teamPages = teamRepository.findAll(PageRequest.of(page, size));
+        List<TeamDto> teamPagesDto = teamPages.getContent().stream().map(team -> TeamMapper.mapToTeamDto(team)).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")
                 .status("Success")
-                .data(teamDtos)
+                .data(teamPagesDto)
                 .build();
     }
 
