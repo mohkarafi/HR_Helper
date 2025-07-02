@@ -1,6 +1,6 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.emplyeemanagment.Entities.Intern;
 import org.example.emplyeemanagment.Entities.Report;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
@@ -106,8 +106,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public StandardResponse getAllReports(int page , int size) {
-        Page<Report> reportPages = reportRepository.findAll(PageRequest.of(page,size));
+    public StandardResponse getAllReports(int page, int size) {
+        Page<Report> reportPages = reportRepository.findAll(PageRequest.of(page, size));
         List<ReportDto> reportDtos = reportPages.getContent().stream()
                 .map(ReportMapper::mapToReportDto)
                 .collect(Collectors.toList());
@@ -141,14 +141,14 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public StandardResponse getReportByInternId(Long internID) {
         Optional<Intern> intern = internRepository.findById(internID);
-        if(intern.isEmpty()) {
+        if (intern.isEmpty()) {
             return StandardResponse.builder()
                     .code("403")
                     .status("Intern with the id " + internID + " not found")
                     .data(null)
                     .build();
         }
-        List<Report>reports = reportRepository.findByInternId(internID);
+        List<Report> reports = reportRepository.findByInternId(internID);
         log.info("Nombre de rapports trouvés pour internID {} : {}", internID, reports.size());
 
         List<ReportDto> reportDtos = reports.stream().map(report -> ReportMapper.mapToReportDto(report)).collect(Collectors.toList());

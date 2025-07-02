@@ -20,5 +20,6 @@ public class SignupRequest {
 
     @NotNull(message = "Employee ID cannot be null")
     private Long employeeId;
+
     private String role ;
 }

@@ -7,10 +7,7 @@ import org.example.emplyeemanagment.Service.AuthService;
 import org.example.emplyeemanagment.dtos.LoginRequest;
 import org.example.emplyeemanagment.dtos.SignupRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
@@ -25,4 +22,8 @@ private AuthService authService;
     public AuthResponse login(@Valid @RequestBody LoginRequest loginRequest) {
        return authService.loginUser(loginRequest);
     }
+  @PostMapping("forget")
+    public void resetPassword(String username){
+        authService.resetPassword(username);
+  }
 }

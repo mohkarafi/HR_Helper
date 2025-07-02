@@ -2,6 +2,7 @@ package org.example.emplyeemanagment.Service.Implemenatation;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Department;
 import org.example.emplyeemanagment.Mappers.DepartmentMapper;
 import org.example.emplyeemanagment.Repository.DepartmentRepository;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;

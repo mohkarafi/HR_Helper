@@ -1,6 +1,7 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.UserAccount;
 import org.example.emplyeemanagment.Repository.UserAccountRepository;
 import org.springframework.security.core.userdetails.User;
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private UserAccountRepository userAccountRepository;
+    private final  UserAccountRepository userAccountRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

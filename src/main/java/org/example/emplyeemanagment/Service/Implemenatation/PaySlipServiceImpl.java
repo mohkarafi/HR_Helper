@@ -3,6 +3,7 @@ package org.example.emplyeemanagment.Service.Implemenatation;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.PaySlip;
 import org.example.emplyeemanagment.Enums.paySlipStatus;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PaySlipServiceImpl implements PaySlipService {
     private final PaySlipRepository paySlipRepository;
     private final EmployeeRepository employeeRepository;
@@ -62,11 +63,11 @@ public class PaySlipServiceImpl implements PaySlipService {
             paySlip.setStatus(paySlipDto.getStatus());
             paySlip.setEmployee(employee);
             PaySlip savePaySlip = paySlipRepository.save(paySlip);
-            if(savePaySlip.getStatus()== paySlipStatus.Validated || savePaySlip.getStatus()== paySlipStatus.Paid){
+            if (savePaySlip.getStatus() == paySlipStatus.Validated || savePaySlip.getStatus() == paySlipStatus.Paid) {
                 EmailDetails emailDetails = EmailDetails.builder()
                         .ReciverEmail(paySlip.getEmployee().getEmail())
-                        .EmailSubject("Payroll Bulletin  " + savePaySlip.getStatus()+"\n")
-                        .EmailBody("Your payroll bulletin for the period" + savePaySlip.getPayrollDate()+ " %s has been processed successfully.  \n" +
+                        .EmailSubject("Payroll Bulletin  " + savePaySlip.getStatus() + "\n")
+                        .EmailBody("Your payroll bulletin for the period" + savePaySlip.getPayrollDate() + " %s has been processed successfully.  \n" +
                                 "You can view and download it from your personal portal.")
                         .build();
                 notificationService.sendEmail(emailDetails);

@@ -10,4 +10,5 @@ import org.springframework.stereotype.Service;
 public interface AuthService {
     AuthResponse signupUser(@Valid SignupRequest signupRequest);
     AuthResponse loginUser(@Valid LoginRequest loginRequest);
+    void resetPassword(@Valid String username);
 }

@@ -3,6 +3,7 @@ package org.example.emplyeemanagment.Service.Implemenatation;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.LeaveRequest;
 import org.example.emplyeemanagment.Enums.LeaveReason;
@@ -24,10 +25,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class LeaveRequestServiceImpl implements LeaveRequestService {
     private final LeaveRequestRepository leaveRequestRepository;
@@ -96,8 +98,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
                             + leaveRequestUpdated.getStartDate() + " to "
                             + leaveRequestUpdated.getEndDate() + " has been approved.")
                     .build();
-
-            notificationService.sendEmail(emailDetails);
+            notificationService.sendEmail(emailDetails );
         }
 
         return StandardResponse.builder()

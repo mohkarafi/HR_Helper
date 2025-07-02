@@ -2,6 +2,7 @@ package org.example.emplyeemanagment.Service.Implemenatation;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Department;
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.LeaveRequest;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -62,7 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .EmailBody("Congratulations and welcome to our company!\n" +
                             "We’re happy to have you with us and excited about what we’ll accomplish together.")
                     .build();
-            notificationService.sendEmail(emailDetails);
+            notificationService.sendEmail(emailDetails );
             return StandardResponse.builder()
                     .code("200")
                     .status("Employee Saved")

@@ -1,7 +1,7 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Team;
 import org.example.emplyeemanagment.Mappers.TeamMapper;
 import org.example.emplyeemanagment.Repository.TeamRepository;
@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class TeamServiceImpl implements TeamService {
     private final TeamRepository teamRepository;
@@ -82,7 +82,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public StandardResponse getAllTeams(int page , int size) {
+    public StandardResponse getAllTeams(int page, int size) {
         Page<Team> teamPages = teamRepository.findAll(PageRequest.of(page, size));
         List<TeamDto> teamPagesDto = teamPages.getContent().stream().map(team -> TeamMapper.mapToTeamDto(team)).collect(Collectors.toList());
         return StandardResponse.builder()

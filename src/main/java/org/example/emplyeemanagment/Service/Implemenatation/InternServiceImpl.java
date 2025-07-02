@@ -2,6 +2,7 @@ package org.example.emplyeemanagment.Service.Implemenatation;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.Intern;
 import org.example.emplyeemanagment.Entities.Task;
@@ -20,10 +21,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class InternServiceImpl implements InternService {
     private final InternRepository internRepository;
@@ -56,7 +58,7 @@ public class InternServiceImpl implements InternService {
                             "We’re happy to have you on board as an intern.  \n" +
                             "Looking forward to what we’ll accomplish together!.")
                     .build();
-            emailService.sendEmail(emailDetails);
+            emailService.sendEmail(emailDetails );
             return StandardResponse.builder()
                     .code("200")
                     .status("Successfully Added Intern")

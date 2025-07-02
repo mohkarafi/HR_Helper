@@ -1,7 +1,7 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.example.emplyeemanagment.Entities.Employee;
 import org.example.emplyeemanagment.Entities.Task;
 import org.example.emplyeemanagment.Entities.Team;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
@@ -110,8 +110,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public StandardResponse findAllTasks(int page , int size) {
-        Page<Task> taskPages = taskRepository.findAll(PageRequest.of(page,size));
+    public StandardResponse findAllTasks(int page, int size) {
+        Page<Task> taskPages = taskRepository.findAll(PageRequest.of(page, size));
         List<TaskDto> TasksDtos = taskPages.getContent().stream().map(task -> TaskMapper.mapTotaskDto(task)).collect(Collectors.toList());
         return StandardResponse.builder()
                 .code("200")

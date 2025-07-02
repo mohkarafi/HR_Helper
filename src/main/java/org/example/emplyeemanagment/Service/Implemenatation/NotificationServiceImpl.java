@@ -1,5 +1,6 @@
 package org.example.emplyeemanagment.Service.Implemenatation;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.emplyeemanagment.Service.NotificationService;
 import org.example.emplyeemanagment.dtos.EmailDetails;
@@ -10,12 +11,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-
+@RequiredArgsConstructor
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
-
-    @Autowired
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String senderEmail;
@@ -25,9 +24,8 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public void sendEmail(EmailDetails emailDetails) {
+    public void sendEmail(EmailDetails emailDetails ) {
         try {
-            String link = ORIGIN + "auth/signup?token=" ;
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(senderEmail);
             message.setTo(emailDetails.getReciverEmail());
