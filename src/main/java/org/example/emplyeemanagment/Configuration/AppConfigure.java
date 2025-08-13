@@ -24,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @AllArgsConstructor
 public class AppConfigure {
+
     private CustomUserDetailsService userDetailsService;
     private JwtAuthFilter jwtAuthFilter;
 
@@ -32,12 +33,14 @@ public class AppConfigure {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                   /* auth.requestMatchers("/auth/signup").permitAll();
+                  /*
+                    auth.requestMatchers("/auth/signup").permitAll();
                     auth.requestMatchers("/auth/login").permitAll();
                     auth.requestMatchers("/auth/forget").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/Employee/").hasAnyRole("USER", "ADMIN");
                     auth.requestMatchers("/Employee/**").hasRole("ADMIN");
-                    auth.anyRequest().authenticated();*/
+                    auth.anyRequest().authenticated();
+                    */
                     auth.anyRequest().permitAll();
                 })
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -51,7 +54,7 @@ public class AppConfigure {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+@Bean
     AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
@@ -59,13 +62,11 @@ public class AppConfigure {
         return authProvider;
     }
 
-
-    @Bean
+@Bean
     AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         var authBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
         return authBuilder.build();
     }
-
 
 }
