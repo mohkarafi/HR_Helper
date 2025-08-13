@@ -48,7 +48,7 @@ HR-HELPER is a Spring Boot backend application designed to help HR departments m
 
 ---
 
-## 🚀 How to Run
+## 🚀 How to Run without Docker
 
 bash
 # Clone the repository
@@ -59,6 +59,25 @@ cd Employee_Management
 
 # Run the application
 ./mvnw spring-boot:run
+
+##  🐳 Run with Docker
+ # Build Docker image
+docker build -t hr-helper-backend .
+
+# Run with Docker Compose
+docker-compose up --build
+
+# This will start:
+
+MySQL Database (with configured environment variables)
+
+Spring Boot Application (connected to the database)
+
+3️⃣ Access the application
+
+- API: [http://localhost:8080](http://localhost:8080) **or** `http://<YourHostIPAddress>:8080`
+- Swagger Docs: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) **or** `http://<YourHostIPAddress>:8080/swagger-ui.html`
+
 
 🛡️ Security Notes
 All endpoints are secured using Spring Security.
